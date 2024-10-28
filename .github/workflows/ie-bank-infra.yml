@@ -3,11 +3,11 @@ name: ie-bank-infra
 on:
   workflow_dispatch:
   push:
-      paths:
-        - '!scripts/**'
+      paths-ignore:
+        - 'scripts/**'
 
 env:
-  RESOURCE_GROUP_DEV: aguadamillas_resources
+  RESOURCE_GROUP_DEV: BCSAI2024-DEVOPS-PROFESSORS
   SUBSCRIPTION_ID_DEV: e0b9cada-61bc-4b5a-bd7a-52c606726b3b
   USER_ALIAS: aguadamillas
 
@@ -36,13 +36,13 @@ jobs:
     - uses: actions/checkout@main
     
       # Log into Azure
-    - uses: azure/login@v1
+    - uses: azure/login@v2
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       # Deploy Bicep file
     - name: deploy
-      uses: azure/arm-deploy@v1
+      uses: azure/arm-deploy@v2
       with:
         subscriptionId: ${{ env.SUBSCRIPTION_ID_DEV }}
         resourceGroupName: ${{ env.RESOURCE_GROUP_DEV }}
