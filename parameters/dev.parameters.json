@@ -20,6 +20,9 @@
         "appServiceAppName": {
             "value": "mridella-fe-dev"
         },
+        "postgreSQLAdminPassword":{
+            "value": "IE.Bank.DB.Admin.Pa$$"
+        },
         "location": {
             "value": "North Europe"
         }

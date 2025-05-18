@@ -29,6 +29,8 @@ param appServiceAPIAppName string = 'ie-bank-api-dev'
 @sys.description('The Azure location where the resources will be deployed')
 param location string = resourceGroup().location
 
+@secure()
+param postgreSQLAdminPassword string
 
 @sys.description('The value for the environment variable ENV')
 param appServiceAPIEnvVarENV string
@@ -61,7 +63,7 @@ resource postgresSQLServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01
   }
   properties: {
     administratorLogin: 'iebankdbadmin'
-    administratorLoginPassword: 'IE.Bank.DB.Admin.Pa$$'
+    administratorLoginPassword: postgreSQLAdminPassword
     createMode: 'Default'
     highAvailability: {
       mode: 'Disabled'
