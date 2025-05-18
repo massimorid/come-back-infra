@@ -6,19 +6,19 @@
             "value": "nonprod"
         },
         "postgreSQLServerName": {
-            "value": "mridella-dbsrv-dev"
+            "value": "mridella-dbsrv-uat"
         },
         "postgreSQLDatabaseName": {
-            "value": "mridella-db-dev"
+            "value": "mridella-db-uat"
         },
         "appServicePlanName": {
-            "value": "mridella-asp-dev"
+            "value": "mridella-asp-uat"
         },
         "appServiceAPIAppName": {
-            "value": "mridella-be-dev"
+            "value": "mridella-be-uat"
         },
         "appServiceAppName": {
-            "value": "mridella-fe-dev"
+            "value": "mridella-fe-uat"
         },
         "location": {
             "value": "North Europe"
