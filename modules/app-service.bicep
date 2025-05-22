@@ -1,4 +1,5 @@
 param location string = resourceGroup().location
+param logAnalyticsWorkspace string = '${uniqueString(resourceGroup().id)}la'
 param appServicePlanName string
 param appServiceAppName string
 param appServiceAPIAppName string
@@ -15,7 +16,6 @@ param appServiceAPIDBHostFLASK_DEBUG string
   'prod'
 ])
 param environmentType string
-
 var appServicePlanSkuName = (environmentType == 'prod') ? 'B1' : 'B1'
 
 resource appServicePlan 'Microsoft.Web/serverFarms@2022-03-01' = {
@@ -95,3 +95,24 @@ resource appServiceApp 'Microsoft.Web/sites@2022-03-01' = {
 }
 
 output appServiceAppHostName string = appServiceApp.properties.defaultHostName
+
+resource logAnalytics 'Microsoft.OperationalInsights/workspaces@2023-09-01' existing = {
+  name: logAnalyticsWorkspace
+}
+
+resource diagnosticLogs 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
+  name: appServicePlan.name
+  scope: appServicePlan
+  properties: {
+    workspaceId: logAnalytics.id
+    logs: [
+    {
+      category: 'AllMetrics'
+      enabled: true
+      retentionPolicy: {
+        days: 30
+        enabled: true }
+      }
+    ]
+  }
+}
