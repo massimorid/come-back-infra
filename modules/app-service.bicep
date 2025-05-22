@@ -109,9 +109,6 @@ resource diagnosticLogsApp 'Microsoft.Insights/diagnosticSettings@2021-05-01-pre
     {
       category: 'AllMetrics'
       enabled: true
-      retentionPolicy: {
-        days: 30
-        enabled: true }
       }
     ]
   }
@@ -126,9 +123,6 @@ resource diagnosticLogsappAPI 'Microsoft.Insights/diagnosticSettings@2021-05-01-
     {
       category: 'AllMetrics'
       enabled: true
-      retentionPolicy: {
-        days: 30
-        enabled: true }
       }
     ]
   }
