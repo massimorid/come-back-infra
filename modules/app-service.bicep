@@ -105,7 +105,7 @@ resource diagnosticLogsApp 'Microsoft.Insights/diagnosticSettings@2021-05-01-pre
   scope: appServiceApp
   properties: {
     workspaceId: logAnalytics.id
-    logs: [
+    metrics: [
     {
       category: 'AllMetrics'
       enabled: true
@@ -122,7 +122,7 @@ resource diagnosticLogsappAPI 'Microsoft.Insights/diagnosticSettings@2021-05-01-
   scope: appServiceAPIApp
   properties: {
     workspaceId: logAnalytics.id
-    logs: [
+    metrics: [
     {
       category: 'AllMetrics'
       enabled: true
