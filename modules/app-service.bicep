@@ -100,9 +100,26 @@ resource logAnalytics 'Microsoft.OperationalInsights/workspaces@2023-09-01' exis
   name: logAnalyticsWorkspace
 }
 
-resource diagnosticLogs 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
-  name: appServicePlan.name
-  scope: appServicePlan
+resource diagnosticLogsApp 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
+  name: '${appServiceApp.name}-diagnostics'
+  scope: appServiceApp
+  properties: {
+    workspaceId: logAnalytics.id
+    logs: [
+    {
+      category: 'AllMetrics'
+      enabled: true
+      retentionPolicy: {
+        days: 30
+        enabled: true }
+      }
+    ]
+  }
+}
+
+resource diagnosticLogsappAPI 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
+  name: '${appServiceAPIApp.name}-diagnostics'
+  scope: appServiceAPIApp
   properties: {
     workspaceId: logAnalytics.id
     logs: [
