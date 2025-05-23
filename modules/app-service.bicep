@@ -1,5 +1,5 @@
 param location string = resourceGroup().location
-param logAnalyticsWorkspace string = '${uniqueString(resourceGroup().id)}la'
+//param logAnalyticsWorkspace string = '${uniqueString(resourceGroup().id)}la'
 param appServicePlanName string
 param appServiceAppName string
 param appServiceAPIAppName string
@@ -96,34 +96,34 @@ resource appServiceApp 'Microsoft.Web/sites@2022-03-01' = {
 
 output appServiceAppHostName string = appServiceApp.properties.defaultHostName
 
-resource logAnalytics 'Microsoft.OperationalInsights/workspaces@2023-09-01' existing = {
-  name: logAnalyticsWorkspace
-}
+// resource logAnalytics 'Microsoft.OperationalInsights/workspaces@2023-09-01' existing = {
+//   name: logAnalyticsWorkspace
+// }
 
-resource diagnosticLogsApp 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
-  name: '${appServiceApp.name}-diagnostics'
-  scope: appServiceApp
-  properties: {
-    workspaceId: logAnalytics.id
-    metrics: [
-    {
-      category: 'AllMetrics'
-      enabled: true
-      }
-    ]
-  }
-}
+// resource diagnosticLogsApp 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
+//   name: '${appServiceApp.name}-diagnostics'
+//   scope: appServiceApp
+//   properties: {
+//     workspaceId: logAnalytics.id
+//     metrics: [
+//     {
+//       category: 'AllMetrics'
+//       enabled: true
+//       }
+//     ]
+//   }
+// }
 
-resource diagnosticLogsappAPI 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
-  name: '${appServiceAPIApp.name}-diagnostics'
-  scope: appServiceAPIApp
-  properties: {
-    workspaceId: logAnalytics.id
-    metrics: [
-    {
-      category: 'AllMetrics'
-      enabled: true
-      }
-    ]
-  }
-}
+// resource diagnosticLogsappAPI 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
+//   name: '${appServiceAPIApp.name}-diagnostics'
+//   scope: appServiceAPIApp
+//   properties: {
+//     workspaceId: logAnalytics.id
+//     metrics: [
+//     {
+//       category: 'AllMetrics'
+//       enabled: true
+//       }
+//     ]
+//   }
+// }
