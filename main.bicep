@@ -4,8 +4,6 @@
   'prod'
 ])
 param environmentType string = 'nonprod'
-@sys.description('The user alias to add to the deployment name')
-param userAlias string = 'aguadamillas'
 @sys.description('The PostgreSQL Server name')
 @minLength(3)
 @maxLength(24)
@@ -28,29 +26,19 @@ param appServiceAppName string = 'ie-bank-dev'
 param appServiceAPIAppName string = 'ie-bank-api-dev'
 @sys.description('The Azure location where the resources will be deployed')
 param location string = resourceGroup().location
-
-@secure()
-param postgreSQLAdminPassword string
-
 @sys.description('The value for the environment variable ENV')
 param appServiceAPIEnvVarENV string
-
 @sys.description('The value for the environment variable DBHOST')
 param appServiceAPIEnvVarDBHOST string
-
 @sys.description('The value for the environment variable DBNAME')
 param appServiceAPIEnvVarDBNAME string
-
 @sys.description('The value for the environment variable DBPASS')
 @secure()
 param appServiceAPIEnvVarDBPASS string
-
 @sys.description('The value for the environment variable DBUSER')
 param appServiceAPIDBHostDBUSER string
-
 @sys.description('The value for the environment variable FLASK_APP')
 param appServiceAPIDBHostFLASK_APP string
-
 @sys.description('The value for the environment variable FLASK_DEBUG')
 param appServiceAPIDBHostFLASK_DEBUG string
 
@@ -63,7 +51,7 @@ resource postgresSQLServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01
   }
   properties: {
     administratorLogin: 'iebankdbadmin'
-    administratorLoginPassword: postgreSQLAdminPassword
+    administratorLoginPassword: 'IE.Bank.DB.Admin.Pa$$'
     createMode: 'Default'
     highAvailability: {
       mode: 'Disabled'
@@ -98,7 +86,7 @@ resource postgresSQLDatabase 'Microsoft.DBforPostgreSQL/flexibleServers/database
 }
 
 module appService 'modules/app-service.bicep' = {
-  name: 'appService-${userAlias}'
+  name: 'appService'
   params: {
     location: location
     environmentType: environmentType
