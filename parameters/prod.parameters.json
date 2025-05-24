@@ -1,0 +1,30 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "environmentType": {
+            "value": "nonprod"
+        },
+        "postgreSQLServerName": {
+            "value": "mridella-dbsrv-prod"
+        },
+        "postgreSQLDatabaseName": {
+            "value": "mridella-db-prod"
+        },
+        "appServicePlanName": {
+            "value": "mridella-asp-prod"
+        },
+        "appServiceAPIAppName": {
+            "value": "mridella-be-prod"
+        },
+        "appServiceAppName": {
+            "value": "mridella-fe-prod"
+        },
+        "postgreSQLAdminPassword":{
+            "value": "IE.Bank.DB.Admin.Pa$$"
+        },
+        "location": {
+            "value": "North Europe"
+        }
+    }
+}
