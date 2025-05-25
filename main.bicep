@@ -29,7 +29,30 @@ param appServiceAPIAppName string = 'ie-bank-api-dev'
 @sys.description('The Azure location where the resources will be deployed')
 param location string = resourceGroup().location
 
+@secure()
+param postgreSQLAdminPassword string
 
+@sys.description('The value for the environment variable ENV')
+param appServiceAPIEnvVarENV string
+
+@sys.description('The value for the environment variable DBHOST')
+param appServiceAPIEnvVarDBHOST string
+
+@sys.description('The value for the environment variable DBNAME')
+param appServiceAPIEnvVarDBNAME string
+
+@sys.description('The value for the environment variable DBPASS')
+@secure()
+param appServiceAPIEnvVarDBPASS string
+
+@sys.description('The value for the environment variable DBUSER')
+param appServiceAPIDBHostDBUSER string
+
+@sys.description('The value for the environment variable FLASK_APP')
+param appServiceAPIDBHostFLASK_APP string
+
+@sys.description('The value for the environment variable FLASK_DEBUG')
+param appServiceAPIDBHostFLASK_DEBUG string
 
 resource postgresSQLServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
   name: postgreSQLServerName
@@ -83,7 +106,7 @@ module appService 'modules/app-service.bicep' = {
     appServiceAPIAppName: appServiceAPIAppName
     appServicePlanName: appServicePlanName
     appServiceAPIDBHostDBUSER: 'iebankadmin'
-    appServiceAPIDBHostFLASK_APP: 'app.py'
+    appServiceAPIDBHostFLASK_APP: 'app'
     appServiceAPIDBHostFLASK_DEBUG: '1'
     appServiceAPIEnvVarDBHOST: 'massimoridella-dbsrv-uat.postgres.database.azure.com'
     appServiceAPIEnvVarDBNAME: 'massimoridella-db-uat'
