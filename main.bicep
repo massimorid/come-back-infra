@@ -63,7 +63,7 @@ resource postgresSQLServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01
   }
   properties: {
     administratorLogin: 'iebankdbadmin'
-    administratorLoginPassword: postgreSQLAdminPassword
+    administratorLoginPassword: 'IE.Bank.DB.Admin.Pa$$'
     createMode: 'Default'
     highAvailability: {
       mode: 'Disabled'
@@ -105,7 +105,7 @@ module appService 'modules/app-service.bicep' = {
     appServiceAppName: appServiceAppName
     appServiceAPIAppName: appServiceAPIAppName
     appServicePlanName: appServicePlanName
-    appServiceAPIDBHostDBUSER: appServiceAPIDBHostDBUSER
+    appServiceAPIDBHostDBUSER: 'iebankadmin'
     appServiceAPIDBHostFLASK_APP: 'app'
     appServiceAPIDBHostFLASK_DEBUG: '1'
     appServiceAPIEnvVarDBHOST: 'massimoridella-dbsrv-uat.postgres.database.azure.com'

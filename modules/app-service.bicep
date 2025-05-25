@@ -43,31 +43,31 @@ resource appServiceAPIApp 'Microsoft.Web/sites@2022-03-01' = {
       appSettings: [
         {
           name: 'ENV'
-          value: appServiceAPIEnvVarENV
+          value: 'uat'
         }
         {
           name: 'DBHOST'
-          value: appServiceAPIEnvVarDBHOST
+          value: 'massimoridella-dbsrv-uat.postgres.database.azure.com'
         }
         {
           name: 'DBNAME'
-          value: appServiceAPIEnvVarDBNAME
+          value: 'massimoridella-db-uat'
         }
         {
           name: 'DBPASS'
-          value: appServiceAPIEnvVarDBPASS
+          value: 'IE.Bank.DB.Admin.Pa$$'
         }
         {
           name: 'DBUSER'
-          value: appServiceAPIDBHostDBUSER
+          value: 'iebankadmin'
         }
         {
           name: 'FLASK_APP'
-          value: appServiceAPIDBHostFLASK_APP
+          value: 'app'
         }
         {
           name: 'FLASK_DEBUG'
-          value: appServiceAPIDBHostFLASK_DEBUG
+          value: '1'
         }
         {
           name: 'SCM_DO_BUILD_DURING_DEPLOYMENT'
@@ -77,6 +77,7 @@ resource appServiceAPIApp 'Microsoft.Web/sites@2022-03-01' = {
     }
   }
 }
+
 
 resource appServiceApp 'Microsoft.Web/sites@2022-03-01' = {
   name: appServiceAppName
