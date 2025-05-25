@@ -6,19 +6,19 @@
             "value": "nonprod"
         },
         "postgreSQLServerName": {
-            "value": "mridella-dbsrv-uat"
+            "value": "massimoridella-dbsrv-uat"
         },
         "postgreSQLDatabaseName": {
-            "value": "mridella-db-uat"
+            "value": "massimoridella-db-uat"
         },
         "appServicePlanName": {
-            "value": "mridella-asp-uat"
+            "value": "massimoridella-asp-uat"
         },
         "appServiceAPIAppName": {
-            "value": "mridella-be-uat"
+            "value": "massimoridella-be-uat"
         },
         "appServiceAppName": {
-            "value": "mridella-fe-uat"
+            "value": "massimoridella-fe-uat"
         },
         "postgreSQLAdminPassword":{
             "value": "IE.Bank.DB.Admin.Pa$$"

@@ -5,7 +5,7 @@
 ])
 param environmentType string = 'nonprod'
 @sys.description('The user alias to add to the deployment name')
-param userAlias string = 'aguadamillas'
+param userAlias string = 'massimoridella'
 @sys.description('The PostgreSQL Server name')
 @minLength(3)
 @maxLength(24)
@@ -106,12 +106,12 @@ module appService 'modules/app-service.bicep' = {
     appServiceAPIAppName: appServiceAPIAppName
     appServicePlanName: appServicePlanName
     appServiceAPIDBHostDBUSER: appServiceAPIDBHostDBUSER
-    appServiceAPIDBHostFLASK_APP: appServiceAPIDBHostFLASK_APP
-    appServiceAPIDBHostFLASK_DEBUG: appServiceAPIDBHostFLASK_DEBUG
-    appServiceAPIEnvVarDBHOST: appServiceAPIEnvVarDBHOST
-    appServiceAPIEnvVarDBNAME: appServiceAPIEnvVarDBNAME
-    appServiceAPIEnvVarDBPASS: appServiceAPIEnvVarDBPASS
-    appServiceAPIEnvVarENV: appServiceAPIEnvVarENV
+    appServiceAPIDBHostFLASK_APP: 'app'
+    appServiceAPIDBHostFLASK_DEBUG: '1'
+    appServiceAPIEnvVarDBHOST: 'massimoridella-dbsrv-uat.postgres.database.azure.com'
+    appServiceAPIEnvVarDBNAME: 'massimoridella-db-uat'
+    appServiceAPIEnvVarDBPASS: 'IE.Bank.DB.Admin.Pa$$'
+    appServiceAPIEnvVarENV: 'uat'
   }
   dependsOn: [
     postgresSQLDatabase
