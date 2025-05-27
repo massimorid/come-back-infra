@@ -3,7 +3,6 @@ name: ie-bank-infra
 on:
   workflow_dispatch:
   push:
-    #tests
       paths-ignore:
         - 'scripts/**'
 
