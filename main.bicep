@@ -97,6 +97,28 @@ resource postgresSQLDatabase 'Microsoft.DBforPostgreSQL/flexibleServers/database
   }
 }
 
+module keyVault 'modules/key-vault.bicep' = {
+  name: 'keyVault'
+  params: {
+    location: location
+    name: keyVaultName
+  }
+}
+
+
+param containerRegistryName string
+param ServicePrincipalId string
+param keyVaultName string
+module containerRegistry 'modules/container-registry.bicep' = {
+  name: 'containerRegistry'
+  params: {
+    location: location
+    name: containerRegistryName
+    ServicePrincipalId: ServicePrincipalId
+    keyVaultName: keyVaultName
+  }
+}
+
 module appService 'modules/app-service.bicep' = {
   name: 'appService-${userAlias}'
   params: {
