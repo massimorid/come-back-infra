@@ -30,68 +30,35 @@ resource appServicePlan 'Microsoft.Web/serverFarms@2022-03-01' = {
   }
 }
 
-resource appServiceAPIApp 'Microsoft.Web/sites@2022-03-01' = {
-  name: appServiceAPIAppName
-  location: location
-  properties: {
-    serverFarmId: appServicePlan.id
-    httpsOnly: true
-    siteConfig: {
-      linuxFxVersion: 'PYTHON|3.11'
-      alwaysOn: false
-      ftpsState: 'FtpsOnly'
-      appSettings: [
-        {
-          name: 'ENV'
-          value: appServiceAPIEnvVarENV
-        }
-        {
-          name: 'DBHOST'
-          value: appServiceAPIEnvVarDBHOST
-        }
-        {
-          name: 'DBNAME'
-          value: appServiceAPIEnvVarDBNAME
-        }
-        {
-          name: 'DBPASS'
-          value: appServiceAPIEnvVarDBPASS
-        }
-        {
-          name: 'DBUSER'
-          value: appServiceAPIDBHostDBUSER
-        }
-        {
-          name: 'FLASK_APP'
-          value: appServiceAPIDBHostFLASK_APP
-        }
-        {
-          name: 'FLASK_DEBUG'
-          value: appServiceAPIDBHostFLASK_DEBUG
-        }
-        {
-          name: 'SCM_DO_BUILD_DURING_DEPLOYMENT'
-          value: 'true'
-        }
-      ]
-    }
+module apiApp 'api-app.bicep' = {
+  name: 'apiApp'
+  params: {
+    location: location
+    appServicePlanId: appServicePlan.id
+    appServiceAPIAppName: appServiceAPIAppName
+    appServiceAPIEnvVarENV: appServiceAPIEnvVarENV
+    appServiceAPIEnvVarDBHOST: appServiceAPIEnvVarDBHOST
+    appServiceAPIEnvVarDBNAME: appServiceAPIEnvVarDBNAME
+    appServiceAPIEnvVarDBPASS: appServiceAPIEnvVarDBPASS
+    appServiceAPIDBHostDBUSER: appServiceAPIDBHostDBUSER
+    appServiceAPIDBHostFLASK_APP: appServiceAPIDBHostFLASK_APP
+    appServiceAPIDBHostFLASK_DEBUG: appServiceAPIDBHostFLASK_DEBUG
   }
+  dependsOn: [
+    appServicePlan
+  ]
 }
 
-resource appServiceApp 'Microsoft.Web/sites@2022-03-01' = {
-  name: appServiceAppName
-  location: location
-  properties: {
-    serverFarmId: appServicePlan.id
-    httpsOnly: true
-    siteConfig: {
-      linuxFxVersion: 'NODE|18-lts'
-      alwaysOn: false
-      ftpsState: 'FtpsOnly'
-      appCommandLine: 'pm2 serve /home/site/wwwroot --spa --no-daemon'
-      appSettings: []
-    }
+module frontendApp 'frontend-app.bicep' = {
+  name: 'frontendApp'
+  params: {
+    location: location
+    appServicePlanId: appServicePlan.id
+    appServiceAppName: appServiceAppName
   }
+  dependsOn: [
+    appServicePlan
+  ]
 }
 
-output appServiceAppHostName string = appServiceApp.properties.defaultHostName
+output appServiceAppHostName string = frontendApp.outputs.frontendAppHostName
