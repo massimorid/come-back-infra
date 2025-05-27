@@ -54,47 +54,24 @@ param appServiceAPIDBHostFLASK_APP string
 @sys.description('The value for the environment variable FLASK_DEBUG')
 param appServiceAPIDBHostFLASK_DEBUG string
 
-resource postgresSQLServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
-  name: postgreSQLServerName
-  location: location
-  sku: {
-    name: 'Standard_B1ms'
-    tier: 'Burstable'
-  }
-  properties: {
-    administratorLogin: 'iebankdbadmin'
-    administratorLoginPassword: postgreSQLAdminPassword
-    createMode: 'Default'
-    highAvailability: {
-      mode: 'Disabled'
-      standbyAvailabilityZone: ''
-    }
-    storage: {
-      storageSizeGB: 32
-    }
-    backup: {
-      backupRetentionDays: 7
-      geoRedundantBackup: 'Disabled'
-    }
-    version: '15'
-  }
-
-  resource postgresSQLServerFirewallRules 'firewallRules@2022-12-01' = {
-    name: 'AllowAllAzureServicesAndResourcesWithinAzureIps'
-    properties: {
-      endIpAddress: '0.0.0.0'
-      startIpAddress: '0.0.0.0'
-    }
+module postgresServer 'modules/postgres-flexible-server.bicep' = {
+  name: 'postgresServer'
+  params: {
+    location: location
+    postgreSQLServerName: postgreSQLServerName
+    postgreSQLAdminPassword: postgreSQLAdminPassword
   }
 }
 
-resource postgresSQLDatabase 'Microsoft.DBforPostgreSQL/flexibleServers/databases@2022-12-01' = {
-  name: postgreSQLDatabaseName
-  parent: postgresSQLServer
-  properties: {
-    charset: 'UTF8'
-    collation: 'en_US.UTF8'
+module postgresDatabase 'modules/postgres-database.bicep' = {
+  name: 'postgresDatabase'
+  params: {
+    postgreSQLDatabaseName: postgreSQLDatabaseName
+    serverName: postgresServer.outputs.serverName
   }
+  dependsOn: [
+    postgresServer
+  ]
 }
 
 module keyVault 'modules/key-vault.bicep' = {
@@ -136,7 +113,7 @@ module appService 'modules/app-service.bicep' = {
     appServiceAPIEnvVarENV: appServiceAPIEnvVarENV
   }
   dependsOn: [
-    postgresSQLDatabase
+    postgresDatabase
   ]
 }
 
