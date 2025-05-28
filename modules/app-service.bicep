@@ -44,9 +44,6 @@ module apiApp 'api-app.bicep' = {
     appServiceAPIDBHostFLASK_APP: appServiceAPIDBHostFLASK_APP
     appServiceAPIDBHostFLASK_DEBUG: appServiceAPIDBHostFLASK_DEBUG
   }
-  dependsOn: [
-    appServicePlan
-  ]
 }
 
 module frontendApp 'frontend-app.bicep' = {
@@ -56,9 +53,6 @@ module frontendApp 'frontend-app.bicep' = {
     appServicePlanId: appServicePlan.id
     appServiceAppName: appServiceAppName
   }
-  dependsOn: [
-    appServicePlan
-  ]
 }
 
 output appServiceAppHostName string = frontendApp.outputs.frontendAppHostName

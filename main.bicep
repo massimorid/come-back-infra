@@ -69,9 +69,6 @@ module postgresDatabase 'modules/postgres-database.bicep' = {
     postgreSQLDatabaseName: postgreSQLDatabaseName
     serverName: postgresServer.outputs.serverName
   }
-  dependsOn: [
-    postgresServer
-  ]
 }
 
 module keyVault 'modules/key-vault.bicep' = {
